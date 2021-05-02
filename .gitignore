@@ -30,6 +30,9 @@
 .byebug_history
 .idea
 
+# env files
+.env
+
 # Ignore Javascript packs
 /public/assets
 /public/packs
