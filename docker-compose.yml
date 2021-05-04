@@ -8,6 +8,8 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: rails
       MYSQL_PASSWORD: railsrails
+    volumes:
+      - mysql-data:/var/lib/mysql
     ports:
       - "3306:3306"
 
@@ -24,3 +26,8 @@ services:
       - "3000:3000"
     volumes:
       - .:/docker_practice
+      - bundle:/docker_practice/vendor/bundle
+
+volumes:
+  mysql-data:
+  bundle:
