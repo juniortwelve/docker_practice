@@ -26,7 +26,7 @@ services:
       - "3000:3000"
     volumes:
       - .:/docker_practice
-      - bundle:/docker_practice/vendor/bundle
+      - bundle:/usr/local/bundle
 
 volumes:
   mysql-data:
