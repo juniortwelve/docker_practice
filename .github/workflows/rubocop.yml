@@ -1,10 +1,12 @@
-name: Rubocop
+name: Reviewdog
 on: [pull_request]
 jobs:
   rubocop:
+    name: Run rubocop
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout codes
+        uses: actions/checkout@v2
       - name: Set up Ruby 2.7
         uses: ruby/setup-ruby@v1.68.0
         with:
