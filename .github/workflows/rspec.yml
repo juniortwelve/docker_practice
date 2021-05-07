@@ -45,7 +45,7 @@ jobs:
         SLACK_TITLE: The result of Rspec action
         SLACK_MESSAGE: 'succeeded :heart_eyes_cat:'
         SLACK_COLOR: good
-        SLACK_ICON: https://miro.medium.com/max/436/0*GduofJ7lGVhAgrNT.png
+        SLACK_ICON: https://cdn.icon-icons.com/icons2/2148/PNG/512/rspec_icon_132050.png
         SLACK_USERNAME: Rspec
 
     - name: Slack Notification on Failure
@@ -57,5 +57,5 @@ jobs:
         SLACK_TITLE: The result of Rspec action
         SLACK_MESSAGE: 'failed :scream_cat:'
         SLACK_COLOR: danger
-        SLACK_ICON: https://miro.medium.com/max/436/0*GduofJ7lGVhAgrNT.png
+        SLACK_ICON: https://cdn.icon-icons.com/icons2/2148/PNG/512/rspec_icon_132050.png
         SLACK_USERNAME: Rspec
