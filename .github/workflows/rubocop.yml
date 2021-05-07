@@ -27,7 +27,8 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
         SLACK_CHANNEL: github-notification
-        SLACK_TITLE: Rubocop has succeeded
+        SLACK_TITLE: The result of Rubocop action
+        SLACK_MESSAGE: 'succeeded :heart_eyes_cat:'
         SLACK_COLOR: good
 
     - name: Slack Notification on Failure
@@ -36,5 +37,6 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
         SLACK_CHANNEL: github-notification
-        SLACK_TITLE: Rubocop has failed
+        SLACK_TITLE: The result of Rubocop action
+        SLACK_MESSAGE: 'failed :scream_cat:'
         SLACK_COLOR: danger
