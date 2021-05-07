@@ -46,6 +46,7 @@ jobs:
         SLACK_MESSAGE: 'succeeded :heart_eyes_cat:'
         SLACK_COLOR: good
         SLACK_ICON: https://miro.medium.com/max/436/0*GduofJ7lGVhAgrNT.png
+        SLACK_USERNAME: Rspec
 
     - name: Slack Notification on Failure
       if: failure()
@@ -57,3 +58,4 @@ jobs:
         SLACK_MESSAGE: 'failed :scream_cat:'
         SLACK_COLOR: danger
         SLACK_ICON: https://miro.medium.com/max/436/0*GduofJ7lGVhAgrNT.png
+        SLACK_USERNAME: Rspec

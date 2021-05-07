@@ -31,6 +31,7 @@ jobs:
         SLACK_MESSAGE: 'succeeded :heart_eyes_cat:'
         SLACK_COLOR: good
         SLACK_ICON: https://cdn.iconscout.com/icon/free/png-512/rubocop-285394.png
+        SLACK_USERNAME: Rubocop
 
     - name: Slack Notification on Failure
       if: failure()
@@ -42,3 +43,4 @@ jobs:
         SLACK_MESSAGE: 'failed :scream_cat:'
         SLACK_COLOR: danger
         SLACK_ICON: https://cdn.iconscout.com/icon/free/png-512/rubocop-285394.png
+        SLACK_USERNAME: Rubocop
