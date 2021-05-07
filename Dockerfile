@@ -1,7 +1,7 @@
 FROM ruby:2.7.3
 
 # install packages
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y mariadb-client --no-install-recommends && rm -rf /var/lib/apt/lists/*
@@ -16,5 +16,6 @@ ADD Gemfile /docker_practice/Gemfile
 ADD Gemfile.lock /docker_practice/Gemfile.lock
 
 # volume the directory
+RUN gem install bundler
 RUN bundle install
 ADD . /docker_practice
