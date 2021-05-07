@@ -35,3 +35,21 @@ jobs:
       run: bundle exec rspec
       env:
         RAILS_ENV: test
+
+    - name: Slack Notification on Success
+      if: success()
+      uses: rtCamp/action-slack-notify@v2.0.2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_CHANNEL: github-notification
+        SLACK_TITLE: Rspec Success
+        SLACK_COLOR: good
+
+    - name: Slack Notification on Failure
+      if: failure()
+      uses: rtCamp/action-slack-notify@v2.0.2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_CHANNEL: github-notification
+        SLACK_TITLE: Rspec Failure
+        SLACK_COLOR: danger

@@ -5,18 +5,36 @@ jobs:
     name: Run rubocop
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout codes
-        uses: actions/checkout@v2
-      - name: Set up Ruby 2.7
-        uses: ruby/setup-ruby@v1.68.0
-        with:
-          ruby-version: 2.7.3
-          bundler-cache: true
-      - name: rubocop
-        uses: reviewdog/action-rubocop@v1
-        with:
-          rubocop_version: gemfile
-          rubocop_extensions: rubocop-rails:gemfile
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review
-          fail_on_error: true
+    - name: Checkout codes
+      uses: actions/checkout@v2
+    - name: Set up Ruby 2.7
+      uses: ruby/setup-ruby@v1.68.0
+      with:
+        ruby-version: 2.7.3
+        bundler-cache: true
+    - name: rubocop
+      uses: reviewdog/action-rubocop@v1
+      with:
+        rubocop_version: gemfile
+        rubocop_extensions: rubocop-rails:gemfile
+        github_token: ${{ secrets.github_token }}
+        reporter: github-pr-review
+        fail_on_error: true
+
+    - name: Slack Notification on Success
+      if: success()
+      uses: rtCamp/action-slack-notify@v2.0.2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_CHANNEL: github-notification
+        SLACK_TITLE: Rspec Success
+        SLACK_COLOR: good
+
+    - name: Slack Notification on Failure
+      if: failure()
+      uses: rtCamp/action-slack-notify@v2.0.2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_CHANNEL: github-notification
+        SLACK_TITLE: Rspec Failure
+        SLACK_COLOR: danger
