@@ -27,7 +27,7 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
         SLACK_CHANNEL: github-notification
-        SLACK_TITLE: Rspec Success
+        SLACK_TITLE: Rubocop has succeeded
         SLACK_COLOR: good
 
     - name: Slack Notification on Failure
@@ -36,5 +36,5 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
         SLACK_CHANNEL: github-notification
-        SLACK_TITLE: Rspec Failure
+        SLACK_TITLE: Rubocop has failed
         SLACK_COLOR: danger
