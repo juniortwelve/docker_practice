@@ -1,0 +1,10 @@
+test:
+  adapter: mysql2
+  charset: utf8mb4
+  collation: utf8mb4_bin
+  encoding: utf8mb4
+  database: docker_practice_test
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: root
+  password: root
+  host: 127.0.0.1

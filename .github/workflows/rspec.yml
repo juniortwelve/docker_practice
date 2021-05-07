@@ -1,37 +1,37 @@
 name: Rspec
 on: [pull_request]
 jobs:
-  rspec:
-    name: Run rspec
+  setup_and_test_execution:
     runs-on: ubuntu-18.04
-    env:
-      RAILS_ENV: test
-      DB_HOST: db
-      DB_PORT: 33060
     services:
-      db:
-        image: mysql:5.7.27
+      mysql:
+        image: mysql:5.6
         ports:
-          - 33060:3306
+          - 3306:3306
         env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          BIND-ADDRESS: 0.0.0.0
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+          MYSQL_ROOT_PASSWORD: root
     steps:
-      - name: Checkout codes
-        uses: actions/checkout@v2
-      - name: Set up Ruby 2.7
-        uses: ruby/setup-ruby@v1.68.0
-        with:
-          ruby-version: 2.7.3
-          bundler-cache: true
-      - name: bundle install
-        run: |
-          gem install bundler
-          bundle install --jobs 4 --retry 3
-      - name: migration
-        run: |
-          bundle exec rails db:create
-          bundle exec rails db:test:prepare
-      - name: run rspec
-        run: bundle exec rspec
+    - uses: actions/checkout@v2
+    - name: Set up Ruby 2.7
+      uses: ruby/setup-ruby@v1.68.0
+      with:
+        ruby-version: 2.7.3
+        bundler-cache: true
+    - name: Install dependent libralies
+      run: sudo apt-get install libmysqlclient-dev
+    - name: Setup bundler
+      run: gem install bundler
+    - name: bundle install
+      run: |
+        bundle install --jobs 4 --retry 3
+    - name: Setup Database
+      run: |
+        cp config/database.yml.ci config/database.yml
+        bundle exec rails db:create
+        bundle exec ridgepole -c config/database.yml -E test --apply -f db/schemas/Schemafile
+      env:
+        RAILS_ENV: test
+    - name: Run RSpec
+      run: bundle exec rspec
+      env:
+        RAILS_ENV: test
