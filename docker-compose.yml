@@ -4,10 +4,10 @@ services:
     image: mysql:latest
     command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_DATABASE: docker_practice_development
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: rails
-      MYSQL_PASSWORD: railsrails
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
       - mysql-data:/var/lib/mysql
     ports:
