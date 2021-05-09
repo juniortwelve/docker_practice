@@ -1,0 +1,61 @@
+name: Rspec
+on: [pull_request]
+jobs:
+  setup_and_test_execution:
+    runs-on: ubuntu-18.04
+    services:
+      mysql:
+        image: mysql:5.6
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby 2.7
+      uses: ruby/setup-ruby@v1.68.0
+      with:
+        ruby-version: 2.7.3
+        bundler-cache: true
+    - name: Install dependent libralies
+      run: sudo apt-get install libmysqlclient-dev
+    - name: Setup bundler
+      run: gem install bundler
+    - name: bundle install
+      run: |
+        bundle install --jobs 4 --retry 3
+    - name: Setup Database
+      run: |
+        cp config/database.yml.ci config/database.yml
+        bundle exec rails db:create
+        bundle exec ridgepole -c config/database.yml -E test --apply -f db/schemas/Schemafile
+      env:
+        RAILS_ENV: test
+    - name: Run RSpec
+      run: bundle exec rspec
+      env:
+        RAILS_ENV: test
+
+    - name: Slack Notification on Success
+      if: success()
+      uses: rtCamp/action-slack-notify@v2.0.2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_CHANNEL: github-notification
+        SLACK_TITLE: The result of Rspec action
+        SLACK_MESSAGE: 'succeeded :heart_eyes_cat:'
+        SLACK_COLOR: good
+        SLACK_ICON: https://cdn.icon-icons.com/icons2/2148/PNG/512/rspec_icon_132050.png
+        SLACK_USERNAME: Rspec
+
+    - name: Slack Notification on Failure
+      if: failure()
+      uses: rtCamp/action-slack-notify@v2.0.2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_CHANNEL: github-notification
+        SLACK_TITLE: The result of Rspec action
+        SLACK_MESSAGE: 'failed :scream_cat:'
+        SLACK_COLOR: danger
+        SLACK_ICON: https://cdn.icon-icons.com/icons2/2148/PNG/512/rspec_icon_132050.png
+        SLACK_USERNAME: Rspec
